@@ -1,12 +1,12 @@
 package com.example.demoquill
 
 import io.getquill.context.ZioJdbc.DataSourceLayer
-import io.getquill.{MysqlJdbcContext, SnakeCase}
+import io.getquill.{MysqlZioJdbcContext, SnakeCase}
 import zio.{Has, ULayer}
 
 import javax.sql.DataSource
 
-object QuillContext extends MysqlJdbcContext(SnakeCase, "database") {
+object QuillContext extends MysqlZioJdbcContext(SnakeCase) {
   val dataSourceLayer: ULayer[Has[DataSource]] =
-    DataSourceLayer.fromPrefix("database").orDie
+    DataSourceLayer.fromPrefix("ctx").orDie
 }

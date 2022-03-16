@@ -80,10 +80,13 @@ object Demoquill extends App {
         // Ensures the server doesn't die after printing
           *> ZIO.never,
       )
-      .injectCustom(ServerChannelFactory.auto, EventLoopGroup.auto(nThreads),
-    dataSourceLayer,
-    DataService.live
-    ZLayer.succeed(VampireResearch(200)))
+      .injectCustom(
+        ServerChannelFactory.auto,
+        EventLoopGroup.auto(nThreads),
+        dataSourceLayer,
+        DataService.live,
+        ZLayer.succeed(VampireResearch(200)),
+      )
       .exitCode
   }
 }
