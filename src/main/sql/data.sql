@@ -1,3 +1,4 @@
+USE demoquill
 CREATE TABLE person (id INT, first_name VARCHAR(255), last_name VARCHAR(255), age INT);
 CREATE TABLE robot (id INT, name VARCHAR(255), age INT);
 CREATE TABLE address (owner_fk INT, street VARCHAR(255), zip INT, state VARCHAR(255));

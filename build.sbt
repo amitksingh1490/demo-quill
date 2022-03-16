@@ -15,6 +15,7 @@ lazy val root = (project in file("."))
       `zio-test-sbt`,
       `zio-http`,
       `zio-http-test`,
+      `zio-json`,
       quill,
       magic,
       mysql,
