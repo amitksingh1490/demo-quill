@@ -1,15 +1,22 @@
 package com.example.demoquill
 
-import com.example.demoquill.model.Person
+import com.example.demoquill.model.User
 import com.example.demoquill.QuillContext._
+
 object Queries {
   final val largeAge = 100
 
-  val persons          = quote {
-    query[Person]
+  val users = quote {
+    query[User]
   }
-  val personsOlderThan =
-    quote { (age: Int) =>
-      query[Person].filter(person => person.age > largeAge)
-    }
+
+  def addUser(user: User) = quote {
+    query[User]
+      .insert(
+        _.age       -> lift(user.age),
+        _.firstName -> lift(user.firstName),
+        _.lastName  -> lift(user.lastName),
+      )
+      .returningGenerated(_.id)
+  }
 }

@@ -1,9 +1,9 @@
 package com.example.demoquill.api
 
-import com.example.demoquill.DataService
-import com.example.demoquill.model.{Address, Person}
-import zhttp.http.{Http, Request, Response}
+import com.example.demoquill.model.{Address, User}
+import com.example.demoquill.service.UserService
 import zhttp.http._
+import zio.ZIO
 import zio.json._
 
 object UserApi {
@@ -19,12 +19,19 @@ object UserApi {
     implicit val decoder: JsonDecoder[UsersWithAddress] = DeriveJsonDecoder.gen[UsersWithAddress]
     implicit val encoder: JsonEncoder[UsersWithAddress] = DeriveJsonEncoder.gen[UsersWithAddress]
 
-    def make(person: Person, address: Address): UsersWithAddress =
-      UsersWithAddress(person.id, person.firstName, person.lastName, person.age, address)
+    def make(person: User, address: Address): UsersWithAddress =
+      UsersWithAddress(
+        person.id.getOrElse(0),
+        person.firstName,
+        person.lastName,
+        person.age,
+        address,
+      )
   }
+
   val app = Http.collectZIO[Request] {
     case request @ Method.GET -> !! / "users" =>
-      DataService
+      UserService
         .users
         .map {
           case users if request.url.queryParams.contains("pretty") =>
@@ -33,9 +40,24 @@ object UserApi {
         }
 
     case Method.GET -> !! / "userswithaddress" =>
-      DataService
+      UserService
         .usersWithAddress
         .map(users => users.map(res => UsersWithAddress.make(res._1, res._2)))
         .map(r => Response.json(r.toJsonPretty))
+
+    case request @ Method.POST -> !! / "user" =>
+      request.bodyAsString.map(b => b.fromJson[User]).flatMap {
+        case Left(_)     => ZIO.succeed(Response.fromHttpError(HttpError.BadRequest()))
+        case Right(user) =>
+          UserService
+            .addUser(user)
+            .map(id =>
+              Response(
+                Status.CREATED,
+                data = HttpData.fromString(s"User created with id: ${id.fold(0)(identity)}"),
+              ),
+            )
+      }
+
   }
 }
