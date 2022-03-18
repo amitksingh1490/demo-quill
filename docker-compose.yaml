@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: demo-quill
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+      MYSQL_USER: quill
+      MYSQL_PASSWORD: QuillRocks!
+      MYSQL_DATABASE: demoquill
+    ports:
+      - 13306:3306
+    volumes:
+     - ./src/main/sql:/docker-entrypoint-initdb.d

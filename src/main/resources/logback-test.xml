@@ -1,0 +1,14 @@
+<configuration>
+  <!--
+    Not sure why but logback wants a file named logback-text.xml.
+    Also the latest version doesn't use 'layout' blocks it uses 'encoder' blocks.
+  -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
