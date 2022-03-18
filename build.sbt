@@ -19,6 +19,7 @@ lazy val root = (project in file("."))
       quill,
       magic,
       mysql,
+      slf4j
     ),
     scalacOptions ++= Seq("-Ymacro-annotations"),
   )
