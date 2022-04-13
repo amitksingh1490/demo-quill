@@ -14,7 +14,7 @@ object Dependencies {
   val `zio-json` = "dev.zio" %% "zio-json" % ZioJsonVersion
 
   val quill = "io.getquill"          %% "quill-jdbc-zio"       % "3.16.3"
-  val magic = "io.github.kitlangton" %% "zio-magic"            % "0.3.11"
+  val magic = "io.github.kitlangton" %% "zio-magic"            % "0.3.12"
   val mysql = "mysql"                 % "mysql-connector-java" % "8.0.28"
 
   val slf4j = "ch.qos.logback"        % "logback-classic" % "1.2.11"
