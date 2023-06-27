@@ -3,7 +3,7 @@ import sbt.Keys._
 import scalafix.sbt.ScalafixPlugin.autoImport._
 
 object BuildHelper {
-  val ScalaVersion = "2.13.8"
+  val ScalaVersion = "2.13.11"
 
   def commonSettings(scalaVersion: String) = CrossVersion.partialVersion(scalaVersion) match {
     case Some((3, _))                  => Seq.empty
