@@ -13,7 +13,7 @@ object Dependencies {
 
   val `zio-json` = "dev.zio" %% "zio-json" % ZioJsonVersion
 
-  val quill = "io.getquill"          %% "quill-jdbc-zio"       % "4.6.1"
+  val quill = "io.getquill"          %% "quill-jdbc-zio"       % "4.8.4"
   val magic = "io.github.kitlangton" %% "zio-magic"            % "0.3.11"
   val mysql = "mysql"                 % "mysql-connector-java" % "8.0.33"
 
